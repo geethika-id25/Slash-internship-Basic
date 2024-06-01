@@ -1,0 +1,46 @@
+/* Create the Students table */
+CREATE TABLE Students (
+  student_id INT PRIMARY KEY AUTO_INCREMENT,
+  student_name VARCHAR(100) NOT NULL,
+  student_address VARCHAR(200) NOT NULL,
+  date_of_birth DATE,
+  department VARCHAR(50),
+  year VARCHAR(20)
+);
+
+/* Create the Courses table */
+CREATE TABLE Courses (
+  course_id INT PRIMARY KEY AUTO_INCREMENT,
+  course_name VARCHAR(100) NOT NULL,
+  department VARCHAR(50),
+  FOREIGN KEY (department) REFERENCES Students(department),
+  instructor_name VARCHAR(100)
+);
+
+/* Create the Enrollments table */
+CREATE TABLE Enrollments (
+  enrollment_id INT PRIMARY KEY AUTO_INCREMENT,
+  student_id INT,
+  course_id INT,
+  semester VARCHAR(50),
+  FOREIGN KEY (student_id) REFERENCES Students(student_id),
+  FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+);
+
+/* Optional Grades table */
+CREATE TABLE Grades (
+  grade_id INT PRIMARY KEY AUTO_INCREMENT,
+  enrollment_id INT,
+  letter_grade CHAR(2),
+  numerical_grade INT,
+  FOREIGN KEY (enrollment_id) REFERENCES Enrollments(enrollment_id)
+);
+
+/* Optional Attendance table */
+CREATE TABLE Attendance (
+  attendance_id INT PRIMARY KEY AUTO_INCREMENT,
+  enrollment_id INT,
+  date DATE,
+  attendance_status VARCHAR(20),
+  FOREIGN KEY (enrollment_id) REFERENCES Enrollments(enrollment_id)
+);
